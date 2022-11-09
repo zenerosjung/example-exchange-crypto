@@ -13,6 +13,9 @@ class Controller extends BaseController
 
     public function index()
     {
-        return view('index');
+        $crypto_list = [
+            'USDT', 'BTC', 'BUSD', 'BNB', 'ETH', 'ADA', 'SHIB', 'DOGE'
+        ];
+        return view('index', ['crypto_list' => $crypto_list]);
     }
 }
