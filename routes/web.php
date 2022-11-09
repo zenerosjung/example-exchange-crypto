@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\AuthenticationController;
+use App\Http\Controllers\RegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +17,10 @@ use App\Http\Controllers\Controller;
 */
 
 Route::get('/', [Controller::class, 'index']);
-Route::get('/login', [Controller::class, 'login']);
+
+Route::get('/login', [AuthenticationController::class, 'index']);
+Route::post('/login', [AuthenticationController::class, 'login']);
+Route::get('/logout', [AuthenticationController::class, 'logout']);
+
+Route::get('/register', [RegisterController::class, 'index']);
+Route::post('/register', [RegisterController::class, 'register']);
