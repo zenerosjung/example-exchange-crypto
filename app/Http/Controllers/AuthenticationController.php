@@ -38,6 +38,7 @@ class AuthenticationController extends BaseController
      */
     public function logout(Request $request): RedirectResponse
     {
+        Auth::logout();
         $request->session()->remove('user');
 
         return redirect()->route('index')->with('success', 'Logout successfully.');
