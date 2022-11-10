@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
@@ -28,20 +27,19 @@ class AuthenticationController extends BaseController
         if (Auth::attempt(['email' => $request->get('email'), 'password' => $request->get('password')])) {
             $request->session()->put('user', Auth::user());
 
-            return redirect()->route('index')
-                ->with('success', 'Login successfully.');
+            return redirect()->route('index')->with('success', 'Login successfully.');
         }
-        return redirect()->back()
-            ->with('error', 'Unauthorised.');
+        return redirect()->back()->with('error', 'Unauthorised.');
     }
 
     /**
      * @param Request $request
-     * @return JsonResponse
+     * @return RedirectResponse
      */
-    public function logout(Request $request): JsonResponse
+    public function logout(Request $request): RedirectResponse
     {
-        return $this->sendResponse([], 'User logout successfully.');
-    }
+        $request->session()->remove('user');
 
+        return redirect()->route('index')->with('success', 'Logout successfully.');
+    }
 }

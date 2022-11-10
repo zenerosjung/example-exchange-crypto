@@ -25,11 +25,11 @@
                         @csrf
                         <div class="form-group">
                             <label for="inputEmail">Email address</label>
-                            <input type="email" class="form-control" id="inputEmail" name="email" aria-describedby="emailHelp">
+                            <input type="email" class="form-control" id="inputEmail" name="email" value="john@gmail.com">
                         </div>
                         <div class="form-group">
                             <label for="inputPassword">Password</label>
-                            <input type="password" class="form-control" id="inputPassword" name="password">
+                            <input type="password" class="form-control" id="inputPassword" name="password" value="123456">
                         </div>
                         <button type="submit" class="btn btn-primary">Login</button>
                     </form>

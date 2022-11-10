@@ -11,11 +11,4 @@ use Illuminate\Routing\Controller as BaseController;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-
-    public function index()
-    {
-        $crypto_list = Cryptocurrency::all();
-
-        return $this->view('index', ['crypto_list' => $crypto_list]);
-    }
 }
