@@ -60,4 +60,38 @@ class User extends Authenticatable
     {
         return $this->hasOne(FundingWallet::class);
     }
+
+    /**
+     * @param int $crypto_id
+     * @return mixed|null
+     */
+    public function getFiatWalletCryptocurrencyByCryptoId(int $crypto_id)
+    {
+        $return = null;
+        foreach ($this->fiatWallet->fiatWalletCryptocurrency as $fiatWalletCryptocurrency) {
+            if ($fiatWalletCryptocurrency->cryptocurrency_id == $crypto_id) {
+                $return = $fiatWalletCryptocurrency;
+                break;
+            }
+        }
+
+        return $return;
+    }
+
+    /**
+     * @param int $crypto_id
+     * @return mixed|null
+     */
+    public function getFundingWalletCryptocurrencyByCryptoId(int $crypto_id)
+    {
+        $return = null;
+        foreach ($this->fundingWallet->fundingWalletCryptocurrency as $fundingWalletCryptocurrency) {
+            if ($fundingWalletCryptocurrency->cryptocurrency_id == $crypto_id) {
+                $return = $fundingWalletCryptocurrency;
+                break;
+            }
+        }
+
+        return $return;
+    }
 }

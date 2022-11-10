@@ -4,3 +4,21 @@
 .navbar a {
     color: #FFFFFF;
 }
+.navbar-crypto-list a {
+    color: #000000;
+}
+.navbar-crypto-list a.active {
+    color: #007bff;
+}
+.nav-tabs .nav-link {
+    color: #000000;
+    border-color: #FFFFFF #FFFFFF #FFFFFF;
+}
+.nav-tabs .nav-link.active {
+    color: rgb(50, 217, 147);
+    border-color: #FFFFFF #FFFFFF #FFFFFF;
+}
+.wallet-balance {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}

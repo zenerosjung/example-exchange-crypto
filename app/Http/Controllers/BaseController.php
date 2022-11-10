@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class BaseController extends Controller
@@ -63,8 +64,6 @@ class BaseController extends Controller
 
     public function view($view = null, $data = [], $mergeData = [])
     {
-        $user = request()->session()->get('user');
-
-        return view($view, array_merge($data, ['user' => $user]), $mergeData);
+        return view($view, array_merge($data, ['user' => Auth::user()]), $mergeData);
     }
 }

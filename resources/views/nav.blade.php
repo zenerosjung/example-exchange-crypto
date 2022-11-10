@@ -6,6 +6,12 @@
                 <span class="navbar-brand mb-0 h1">{{ $user->name }}</span>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="{{ route('wallet.fiat') }}">Fiat and Spot</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('wallet.funding') }}">Funding</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="{{ route('login.logout') }}">Logout</a>
             </li>
         @else

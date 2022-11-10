@@ -40,27 +40,42 @@ class UserSeeder extends Seeder
             'name' => 'THB'
         ]);
 
-        $cryptocurrency = Cryptocurrency::where('name', Cryptocurrency::DEFAULT_CURRENCY)->first();
+        $cryptocurrency_list = Cryptocurrency::all();
         $users = User::all();
 
         foreach ($users as $user) {
-            $fiat_wallet = new FiatWallet(['user_id' => $user->id]);
+            $fiat_wallet = new FiatWallet([
+                'user_id' => $user->id,
+                'estimated_balance' => 0.00008000,
+                'spot_balance' => 0.00008000
+            ]);
             $fiat_wallet->save();
 
-            $fiat_wallet_cryptocurrency = new FiatWalletCryptocurrency([
-                'fiat_wallet_id' => $fiat_wallet->id,
-                'cryptocurrency_id' => $cryptocurrency->id
-            ]);
-            $fiat_wallet_cryptocurrency->save();
+            foreach ($cryptocurrency_list as $cryptocurrency) {
+                $fiat_wallet_cryptocurrency = new FiatWalletCryptocurrency([
+                    'fiat_wallet_id' => $fiat_wallet->id,
+                    'cryptocurrency_id' => $cryptocurrency->id,
+                    'total' => 0.00001000,
+                    'available' => 0.00001000,
+                ]);
+                $fiat_wallet_cryptocurrency->save();
+            }
 
-            $funding_wallet = new FundingWallet(['user_id' => $user->id]);
+            $funding_wallet = new FundingWallet([
+                'user_id' => $user->id,
+                'estimated_balance' => 0.00008000
+            ]);
             $funding_wallet->save();
 
-            $funding_wallet_cryptocurrency = new FundingWalletCryptocurrency([
-                'funding_wallet_id' => $funding_wallet->id,
-                'cryptocurrency_id' => $cryptocurrency->id
-            ]);
-            $funding_wallet_cryptocurrency->save();
+            foreach ($cryptocurrency_list as $cryptocurrency) {
+                $funding_wallet_cryptocurrency = new FundingWalletCryptocurrency([
+                    'funding_wallet_id' => $funding_wallet->id,
+                    'cryptocurrency_id' => $cryptocurrency->id,
+                    'total' => 0.00001000,
+                    'available' => 0.00001000,
+                ]);
+                $funding_wallet_cryptocurrency->save();
+            }
         }
     }
 }
