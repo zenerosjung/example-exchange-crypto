@@ -1,5 +1,5 @@
 <nav class="navbar navbar-dark bg-dark">
-    <span class="navbar-brand mb-0 h1">Exchange</span>
+    <a class="nav-link" href="{{ route('index') }}"><span class="navbar-brand mb-0 h1">Exchange</span></a>
     <ul class="nav">
         <li class="nav-item">
             <a class="nav-link" href="{{ route('login.view') }}">Login</a>

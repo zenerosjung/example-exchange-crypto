@@ -3,7 +3,7 @@ FROM php:8.1-apache
 USER root
 
 RUN apt-get update
-RUN apt-get install -y libzip-dev zip libgmp-dev libssl-dev
+RUN apt-get install -y libzip-dev zip libgmp-dev libssl-dev npm
 RUN docker-php-ext-configure zip
 RUN docker-php-ext-install zip gmp
 RUN docker-php-ext-install -j$(nproc) mysqli pdo_mysql
@@ -25,3 +25,6 @@ RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf
 
 RUN a2enmod rewrite
 RUN composer update
+
+RUN npm install && npm run dev
+#RUN php artisan migrate:fresh --seed

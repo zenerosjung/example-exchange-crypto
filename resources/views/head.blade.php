@@ -7,6 +7,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{{ url('css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ url('css/app.css') }}">
 
     <title>.:: {{ env('APP_NAME')  }} ::.</title>
 </head>
