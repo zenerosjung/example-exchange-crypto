@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\FiatWallet;
+use App\Models\FundingWallet;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -30,7 +32,18 @@ class RegisterController extends BaseController
             $data = $request->all();
             $data['password'] = Hash::make($data['password']);
 
-            (new User($data))->save();
+            $user = new User($data);
+            $user->save();
+
+            $fiatWallet = new FiatWallet([
+                'user_id' => $user->id
+            ]);
+            $fiatWallet->save();
+
+            $fundingWallet = new FundingWallet([
+                'user_id' => $user->id
+            ]);
+            $fundingWallet->save();
 
             return redirect()->back()
                 ->with('success', 'User register successfully.');

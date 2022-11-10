@@ -7,4 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Cryptocurrency extends Model
 {
     protected $table = 'cryptocurrency';
+
+    const DEFAULT_CURRENCY = 'BTC';
 }

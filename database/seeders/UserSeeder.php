@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Cryptocurrency;
 use App\Models\FiatWallet;
 use App\Models\FiatWalletCryptocurrency;
 use App\Models\FundingWallet;
@@ -39,15 +40,16 @@ class UserSeeder extends Seeder
             'name' => 'THB'
         ]);
 
-        $cryptocurrency = DB::select('select * from cryptocurrency where name = \'BTC\'');
+        $cryptocurrency = Cryptocurrency::where('name', Cryptocurrency::DEFAULT_CURRENCY)->first();
         $users = User::all();
+
         foreach ($users as $user) {
             $fiat_wallet = new FiatWallet(['user_id' => $user->id]);
             $fiat_wallet->save();
 
             $fiat_wallet_cryptocurrency = new FiatWalletCryptocurrency([
                 'fiat_wallet_id' => $fiat_wallet->id,
-                'cryptocurrency_id' => $cryptocurrency[0]->id
+                'cryptocurrency_id' => $cryptocurrency->id
             ]);
             $fiat_wallet_cryptocurrency->save();
 
@@ -56,7 +58,7 @@ class UserSeeder extends Seeder
 
             $funding_wallet_cryptocurrency = new FundingWalletCryptocurrency([
                 'funding_wallet_id' => $funding_wallet->id,
-                'cryptocurrency_id' => $cryptocurrency[0]->id
+                'cryptocurrency_id' => $cryptocurrency->id
             ]);
             $funding_wallet_cryptocurrency->save();
         }
