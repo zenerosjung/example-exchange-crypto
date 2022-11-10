@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cryptocurrency;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -13,9 +14,8 @@ class Controller extends BaseController
 
     public function index()
     {
-        $crypto_list = [
-            'USDT', 'BTC', 'BUSD', 'BNB', 'ETH', 'ADA', 'SHIB', 'DOGE'
-        ];
+        $crypto_list = Cryptocurrency::all();
+
         return view('index', ['crypto_list' => $crypto_list]);
     }
 }

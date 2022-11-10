@@ -42,21 +42,21 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('user')->onDelete('cascade');
-            $table->float('estimated_balance', 8, 2);
-            $table->float('fait_balance', 8, 8);
-            $table->float('spot_balance', 8, 8);
+            $table->float('estimated_balance', 8, 8)->default(0);
+            $table->float('fait_balance', 8, 8)->default(0);
+            $table->float('spot_balance', 8, 8)->default(0);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
         });
 
         Schema::create('fiat_wallet_cryptocurrency', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->unsigned();
+            $table->integer('fiat_wallet_id')->unsigned();
             $table->integer('cryptocurrency_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('user')->onDelete('cascade');
+            $table->foreign('fiat_wallet_id')->references('id')->on('fiat_wallet')->onDelete('cascade');
             $table->foreign('cryptocurrency_id')->references('id')->on('cryptocurrency')->onDelete('cascade');
-            $table->float('total', 8, 8);
-            $table->float('available', 8, 8);
+            $table->float('total', 8, 8)->default(0);
+            $table->float('available', 8, 8)->default(0);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
         });
@@ -65,19 +65,19 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('user')->onDelete('cascade');
-            $table->float('estimated_balance', 8, 8);
+            $table->float('estimated_balance', 8, 8)->default(0);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
         });
 
         Schema::create('funding_wallet_cryptocurrency', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->unsigned();
+            $table->integer('funding_wallet_id')->unsigned();
             $table->integer('cryptocurrency_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('user')->onDelete('cascade');
+            $table->foreign('funding_wallet_id')->references('id')->on('funding_wallet')->onDelete('cascade');
             $table->foreign('cryptocurrency_id')->references('id')->on('cryptocurrency')->onDelete('cascade');
-            $table->float('total', 8, 8);
-            $table->float('available', 8, 8);
+            $table->float('total', 8, 8)->default(0);
+            $table->float('available', 8, 8)->default(0);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
         });
