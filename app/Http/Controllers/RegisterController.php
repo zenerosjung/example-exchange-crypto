@@ -2,22 +2,41 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\JsonResponse;
+use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends BaseController
 {
     public function index()
     {
-        return view('register.index');
+        return $this->view('register.index');
     }
 
     /**
      * @param Request $request
-     * @return JsonResponse
+     * @return RedirectResponse
      */
-    public function register(Request $request): JsonResponse
+    public function register(Request $request): RedirectResponse
     {
-        return $this->sendResponse([], 'User register successfully.');
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|unique:user,email',
+            'password' => 'required|confirmed'
+        ]);
+
+        try {
+            $data = $request->all();
+            $data['password'] = Hash::make($data['password']);
+
+            (new User($data))->save();
+
+            return redirect()->back()
+                ->with('success', 'User register successfully.');
+        } catch (\Exception $e){
+            return redirect()->back()
+                ->with('error', 'Error.');
+        }
     }
 }

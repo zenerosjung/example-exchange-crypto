@@ -3,10 +3,25 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
-use App\Http\Controllers\Controller as Controller;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class BaseController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function($request, $next) {
+            if (session('success')) {
+                Alert::success(session('success'));
+            }
+
+            if (session('error')) {
+                Alert::error(session('error'));
+            }
+
+            return $next($request);
+        });
+    }
+
     /**
      * success response method.
      *
@@ -44,5 +59,12 @@ class BaseController extends Controller
         }
 
         return response()->json($response, $code);
+    }
+
+    public function view($view = null, $data = [], $mergeData = [])
+    {
+        $user = request()->session()->get('user');
+
+        return view($view, array_merge($data, ['user' => $user]), $mergeData);
     }
 }

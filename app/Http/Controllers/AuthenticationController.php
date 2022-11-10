@@ -5,28 +5,34 @@ namespace App\Http\Controllers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
 
 class AuthenticationController extends BaseController
 {
     public function index()
     {
-        return view('login.index');
+        return $this->view('login.index');
     }
 
     /**
      * @param Request $request
-     * @return JsonResponse
+     * @return RedirectResponse
      */
-    public function login(Request $request): JsonResponse
+    public function login(Request $request): RedirectResponse
     {
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-            $user = Auth::user();
-            $success['token'] = $user->createToken('MyApp')->accessToken;
-            $success['name'] = $user->name;
+        $request->validate([
+            'email' => 'required',
+            'password' => 'required'
+        ]);
 
-            return $this->sendResponse($success, 'User login successfully.');
+        if (Auth::attempt(['email' => $request->get('email'), 'password' => $request->get('password')])) {
+            $request->session()->put('user', Auth::user());
+
+            return redirect()->route('index')
+                ->with('success', 'Login successfully.');
         }
-        return $this->sendError('Unauthorised.', ['error'=>'Unauthorised']);
+        return redirect()->back()
+            ->with('error', 'Unauthorised.');
     }
 
     /**

@@ -12,4 +12,6 @@
     <title>.:: {{ env('APP_NAME')  }} ::.</title>
 </head>
 <body>
+@include('nav')
+@include('sweetalert::alert')
 

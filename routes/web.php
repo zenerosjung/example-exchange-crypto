@@ -19,8 +19,8 @@ use App\Http\Controllers\RegisterController;
 Route::get('/', [Controller::class, 'index'])->name('index');
 
 Route::get('/login', [AuthenticationController::class, 'index'])->name('login.view');
-Route::post('/login', [AuthenticationController::class, 'login']);
+Route::post('/login', [AuthenticationController::class, 'login'])->name('login.login');
 Route::get('/logout', [AuthenticationController::class, 'logout']);
 
 Route::get('/register', [RegisterController::class, 'index'])->name('register.view');
-Route::post('/register', [RegisterController::class, 'register']);
+Route::post('/register', [RegisterController::class, 'register'])->name('register.register');

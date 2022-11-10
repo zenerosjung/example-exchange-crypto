@@ -16,6 +16,6 @@ class Controller extends BaseController
     {
         $crypto_list = Cryptocurrency::all();
 
-        return view('index', ['crypto_list' => $crypto_list]);
+        return $this->view('index', ['crypto_list' => $crypto_list]);
     }
 }
