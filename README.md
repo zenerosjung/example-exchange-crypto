@@ -30,6 +30,27 @@ Example
     root@9e6d2dfa2bad:/var/www/html# php artisan migrate:fresh --seed
 # 7 Exit from Docker and Open on your Browser
     https://0.0.0.0:18000
+Example
+
+![alt browser](https://github.com/zenerosjung/example-exchange-crypto/blob/main/docs/screenshot1.png?raw=true)
+
+## User account 
+
+This repo have prepare 2 account for test this example system.
+
+1 user have orders to much.
+
+    email : john@gmail.com
+    pass : 123456
+
+2 user want to buy and sell.
+
+    email : jame@gmail.com
+    pass : 123456
+
+## ER
+![alt ER](https://github.com/zenerosjung/example-exchange-crypto/blob/main/docs/exchange_crypto.drawio.png?raw=true)
 
 # Reference
-## [Installation Docker](https://docs.docker.com/engine/install/)
+### [Installation Docker](https://docs.docker.com/engine/install/)
+### [Binance P2P](https://c2c.binance.com/th/trade/buy/BTC)
