@@ -36,14 +36,14 @@ Example
 
 ## User account 
 
-This repo have prepare 2 account for test this example system.
+This data seeder (data sample) have prepare 2 account for test this example system.
 
 1 user have orders to much.
 
     email : john@gmail.com
     pass : 123456
 
-2 user want to buy and sell.
+2 user want to buy and sell. (Default User)
 
     email : jame@gmail.com
     pass : 123456
