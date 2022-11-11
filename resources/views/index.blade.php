@@ -35,15 +35,18 @@
             @foreach($order_list as $order)
                 <tr>
                     <td>{{ $order->user->name }}</td>
-                    <td>{{ number_format($order->price, 2) }}</td>
+                    <td><strong>{{ number_format($order->price, 2) }}</strong> {{ $order->currency->name }}</td>
                     <td>{{ $order->available }}</td>
                     <td>{{ number_format($order->limit_min, 2) }} - {{ number_format($order->limit_max, 2) }}</td>
                     <td>
-                        @foreach($order->orderPayment as $orderPayment)
-
+                        @foreach($order->orderPayment as $a => $orderPayment)
+                            <span class="badge badge-pill badge-warning">{{ $orderPayment->paymentType->name }}</span>
                         @endforeach
                     </td>
-                    <td><button type="button" class="btn btn-info">{{ ucwords($action) }} {{ $crypto_name }}</button></td>
+                    <td>
+                        <a href="{{ route('order.view', ['id' => $order->id, 'action' => $action])  }}"
+                           class="btn btn-info">{{ ucwords($action) }} {{ $crypto_name }}</a>
+                    </td>
                 </tr>
             @endforeach
             </tbody>

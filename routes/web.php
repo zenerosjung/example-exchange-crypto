@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\WalletController;
+use App\Http\Controllers\OrderController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -27,3 +28,7 @@ Route::post('/register', [RegisterController::class, 'register'])->name('registe
 
 Route::get('/wallet/fiat', [WalletController::class, 'fiat'])->name('wallet.fiat');
 Route::get('/wallet/funding', [WalletController::class, 'funding'])->name('wallet.funding');
+Route::get('/wallet/history', [WalletController::class, 'history'])->name('wallet.history');
+
+Route::get('/order/{action}/{id}', [OrderController::class, 'index'])->name('order.view');
+Route::post('/order/{action}/{id}', [OrderController::class, 'transaction'])->name('order.transaction');

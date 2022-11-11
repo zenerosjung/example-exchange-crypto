@@ -12,6 +12,9 @@
                 <a class="nav-link" href="{{ route('wallet.funding') }}">Funding</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="{{ route('wallet.history') }}">Transaction History</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="{{ route('login.logout') }}">Logout</a>
             </li>
         @else

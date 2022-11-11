@@ -48,4 +48,20 @@ class Order extends Model
     {
         return $this->hasMany(OrderPayment::class);
     }
+
+    /**
+     * @return BelongsTo
+     */
+    public function currency(): BelongsTo
+    {
+        return $this->belongsTo(Currency::class, 'price_currency_id', 'id');
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function cryptocurrency(): BelongsTo
+    {
+        return $this->belongsTo(Cryptocurrency::class);
+    }
 }

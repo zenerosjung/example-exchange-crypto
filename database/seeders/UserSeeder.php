@@ -27,6 +27,12 @@ class UserSeeder extends Seeder
             'password' => Hash::make('123456'),
         ]);
 
+        DB::table('user')->insert([
+            'name' => 'benz',
+            'email' => 'benz@gmail.com',
+            'password' => Hash::make('123456'),
+        ]);
+
         $crypto_list = [
             'USDT', 'BTC', 'BUSD', 'BNB', 'ETH', 'ADA', 'SHIB', 'DOGE'
         ];

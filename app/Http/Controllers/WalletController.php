@@ -17,4 +17,9 @@ class WalletController extends BaseController
         $crypto_list = Cryptocurrency::all();
         return $this->view('wallet.funding', ['crypto_list' => $crypto_list]);
     }
+
+    public function history()
+    {
+        return $this->view('wallet.history');
+    }
 }

@@ -28,4 +28,12 @@ class PaymentType extends Model
     {
         return $this->hasMany(UserPaymentTrueMoney::class);
     }
+
+    /**
+     * @return HasMany
+     */
+    public function orderPayment(): HasMany
+    {
+        return $this->hasMany(OrderPayment::class);
+    }
 }

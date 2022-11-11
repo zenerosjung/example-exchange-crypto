@@ -9,6 +9,13 @@ class Transaction extends Model
 {
     protected $table = 'transaction_buy';
 
+    protected $fillable = [
+        'order_id',
+        'payment_type_id',
+        'total',
+        'receive'
+    ];
+
     /**
      * @return BelongsTo
      */
