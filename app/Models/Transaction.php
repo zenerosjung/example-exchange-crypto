@@ -32,4 +32,12 @@ class Transaction extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * @return BelongsTo
+     */
+    public function PaymentType(): BelongsTo
+    {
+        return $this->belongsTo(PaymentType::class);
+    }
 }

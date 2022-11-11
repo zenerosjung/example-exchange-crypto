@@ -6,13 +6,17 @@ Open Terminal app and Run check container list
 
     # docker ps
 
-Example show process docker running
+Example show process docker is running
 
     CONTAINER ID   IMAGE                                         COMMAND                  CREATED          STATUS          PORTS                                NAMES
     9e6d2dfa2bad   example-exchange-crypto_exchange_crypto_web   "docker-php-entrypoi…"   50 seconds ago   Up 44 seconds   0.0.0.0:18000->80/tcp                exchange_crypto_web
     26f6dee50a0b   mysql                                         "docker-entrypoint.s…"   50 seconds ago   Up 46 seconds   33060/tcp, 0.0.0.0:18001->3306/tcp   exchange_crypto_mysql
 
 Copy 'CONTAINER ID' from name 'exchange_crypto_web' and cmd exec docker
+
+    # docker exec -it <CONTAINER ID> bash
+
+Example 
 
     # docker exec -it 9e6d2dfa2bad bash
 
@@ -26,3 +30,6 @@ Copy 'CONTAINER ID' from name 'exchange_crypto_web' and cmd exec docker
     root@9e6d2dfa2bad:/var/www/html# php artisan migrate:fresh --seed
 # 7 Exit from Docker and Open on your Browser
     https://0.0.0.0:18000
+
+# Reference
+## [Installation Docker](https://docs.docker.com/engine/install/)
