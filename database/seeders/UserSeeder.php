@@ -49,52 +49,39 @@ class UserSeeder extends Seeder
         $cryptocurrency_list = Cryptocurrency::all();
         $users = User::all();
 
-        $user = $users[0];
-        $fiat_wallet = new FiatWallet([
-            'user_id' => $user->id,
-            'estimated_balance' => 0.00008000,
-            'spot_balance' => 0.00008000
-        ]);
-        $fiat_wallet->save();
-
-        foreach ($cryptocurrency_list as $cryptocurrency) {
-            $fiat_wallet_cryptocurrency = new FiatWalletCryptocurrency([
-                'fiat_wallet_id' => $fiat_wallet->id,
-                'cryptocurrency_id' => $cryptocurrency->id,
-                'total' => 0.00001000,
-                'available' => 0.00001000,
+        foreach ($users as $user) {
+            $fiat_wallet = new FiatWallet([
+                'user_id' => $user->id,
+                'estimated_balance' => 80000000.00000000,
+                'spot_balance' => 80000000.00000000
             ]);
-            $fiat_wallet_cryptocurrency->save();
-        }
+            $fiat_wallet->save();
 
-        $funding_wallet = new FundingWallet([
-            'user_id' => $user->id,
-            'estimated_balance' => 0.00008000
-        ]);
-        $funding_wallet->save();
+            foreach ($cryptocurrency_list as $cryptocurrency) {
+                $fiat_wallet_cryptocurrency = new FiatWalletCryptocurrency([
+                    'fiat_wallet_id' => $fiat_wallet->id,
+                    'cryptocurrency_id' => $cryptocurrency->id,
+                    'total' => 10000000.00000000,
+                    'available' => 10000000.00000000,
+                ]);
+                $fiat_wallet_cryptocurrency->save();
+            }
 
-        foreach ($cryptocurrency_list as $cryptocurrency) {
-            $funding_wallet_cryptocurrency = new FundingWalletCryptocurrency([
-                'funding_wallet_id' => $funding_wallet->id,
-                'cryptocurrency_id' => $cryptocurrency->id,
-                'total' => 0.00001000,
-                'available' => 0.00001000,
+            $funding_wallet = new FundingWallet([
+                'user_id' => $user->id,
+                'estimated_balance' => 80000000.00000000
             ]);
-            $funding_wallet_cryptocurrency->save();
+            $funding_wallet->save();
+
+            foreach ($cryptocurrency_list as $cryptocurrency) {
+                $funding_wallet_cryptocurrency = new FundingWalletCryptocurrency([
+                    'funding_wallet_id' => $funding_wallet->id,
+                    'cryptocurrency_id' => $cryptocurrency->id,
+                    'total' => 10000000.00000000,
+                    'available' => 10000000.00000000,
+                ]);
+                $funding_wallet_cryptocurrency->save();
+            }
         }
-
-        $user = $users[1];
-        $fiat_wallet = new FiatWallet([
-            'user_id' => $user->id,
-            'estimated_balance' => 0.00000000,
-            'spot_balance' => 0.00000000
-        ]);
-        $fiat_wallet->save();
-
-        $funding_wallet = new FundingWallet([
-            'user_id' => $user->id,
-            'estimated_balance' => 0.00000000
-        ]);
-        $funding_wallet->save();
     }
 }

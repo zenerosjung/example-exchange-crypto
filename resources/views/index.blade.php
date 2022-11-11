@@ -36,8 +36,8 @@
                 <tr>
                     <td>{{ $order->user->name }}</td>
                     <td><strong>{{ number_format($order->price, 2) }}</strong> {{ $order->currency->name }}</td>
-                    <td>{{ $order->available }}</td>
                     <td>{{ number_format($order->limit_min, 2) }} - {{ number_format($order->limit_max, 2) }}</td>
+                    <td>{{ $order->available }}</td>
                     <td>
                         @foreach($order->orderPayment as $a => $orderPayment)
                             <span class="badge badge-pill badge-warning">{{ $orderPayment->paymentType->name }}</span>

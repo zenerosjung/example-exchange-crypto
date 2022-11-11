@@ -62,21 +62,33 @@ class OrderController extends BaseController
                         return redirect()->back()->with('error', 'Available order amount is not match.');
                     }
 
-                    $order->available -= $request->get('total');
+                    $order->available -= $request->get('receive');
 
-                    // Prepare Model Data
+                    // Plus Funding Buyer
                     $buyerFundingCryptocurrency = FundingWalletCryptocurrency::where('funding_wallet_id', $user->fundingWallet->id)
                         ->where('cryptocurrency_id', $order->cryptocurrency_id)
                         ->first();
                     if (empty($buyerFundingCryptocurrency)) {
-                        $buyerFundingCryptocurrency = new FiatWalletCryptocurrency();
-                        $buyerFundingCryptocurrency->fiat_wallet_id = $user->fundingWallet->id;
+                        $buyerFundingCryptocurrency = new FundingWalletCryptocurrency();
+                        $buyerFundingCryptocurrency->funding_wallet_id = $user->fundingWallet->id;
                         $buyerFundingCryptocurrency->cryptocurrency_id = $order->cryptocurrency_id;
                         $buyerFundingCryptocurrency->available = 0;
                     }
-
-                    $buyerFundingCryptocurrency->available += $request->get('total');
+                    $buyerFundingCryptocurrency->available += $request->get('receive');
                     $buyerFundingCryptocurrency->total = $buyerFundingCryptocurrency->available;
+
+                    $buyerFundingWallet = $buyerFundingCryptocurrency->fundingWallet;
+                    $buyerFundingWallet->estimated_balance += $request->get('receive');
+
+                    // Minus Funding Seller
+                    $sellerFundingCryptocurrency = FundingWalletCryptocurrency::where('funding_wallet_id', $order->user_id)
+                        ->where('cryptocurrency_id', $order->cryptocurrency_id)
+                        ->first();
+                    $sellerFundingCryptocurrency->available -= $request->get('receive');
+                    $sellerFundingCryptocurrency->total = $sellerFundingCryptocurrency->available;
+
+                    $sellerFundingWallet = $sellerFundingCryptocurrency->fundingWallet;
+                    $sellerFundingWallet->estimated_balance -= $request->get('receive');
 
                     // Save Transaction
                     $transaction_data = [
@@ -88,9 +100,19 @@ class OrderController extends BaseController
 
                     $transaction = new Transaction($transaction_data);
 
-                    DB::transaction(function () use ($transaction, $buyerFundingCryptocurrency, $order) {
+                    DB::transaction(function () use (
+                        $transaction,
+                        $buyerFundingCryptocurrency,
+                        $buyerFundingWallet,
+                        $sellerFundingCryptocurrency,
+                        $sellerFundingWallet,
+                        $order
+                    ) {
                         $transaction->save();
                         $buyerFundingCryptocurrency->save();
+                        $buyerFundingWallet->save();
+                        $sellerFundingCryptocurrency->save();
+                        $sellerFundingWallet->save();
                         $order->save();
                     });
 
@@ -147,16 +169,24 @@ class OrderController extends BaseController
                     $transaction_data = [
                         'user_id' => $user->id,
                         'order_id' => $order->id,
-                        'total' => $request->get('total'),
-                        'receive' => $request->get('receive'),
+                        'total' => $request->get('receive'),
+                        'receive' => $request->get('total'),
                         'payment_type_id' => $payment_method->id
                     ];
 
                     $transaction = new Transaction($transaction_data);
 
-                    DB::transaction(function () use ($transaction, $buyerFiatCryptocurrency, $order) {
+                    DB::transaction(function () use (
+                        $transaction,
+                        $buyerFiatCryptocurrency,
+//                        $sellerFundingCryptocurrency,
+//                        $buyerFiatWallet,
+                        $order
+                    ) {
                         $transaction->save();
                         $buyerFiatCryptocurrency->save();
+//                        $sellerFundingCryptocurrency->save();
+//                        $buyerFiatWallet->save();
                         $order->save();
                     });
 
@@ -167,7 +197,10 @@ class OrderController extends BaseController
             }
 
             if ($success) {
-                return redirect()->back()->with('success', 'Transaction successfully.');
+                if ($order->available > 0) {
+                    return redirect()->back()->with('success', 'Transaction successfully.');
+                }
+                return redirect()->route('index', ['action' => $action, 'crypto' => $order->cryptocurrency_id])->with('success', 'Transaction successfully.');
             }
             return redirect()->back()->with('error', 'Error create Transaction.');
         } catch (\Exception $e) {

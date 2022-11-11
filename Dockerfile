@@ -27,4 +27,3 @@ RUN a2enmod rewrite
 RUN composer update
 
 RUN npm install && npm run dev
-#RUN php artisan migrate:fresh --seed

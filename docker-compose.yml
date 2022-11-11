@@ -25,8 +25,8 @@ services:
             MYSQL_PASSWORD: 123456
         ports:
             - "18001:3306"
-        volumes:
-            - ./storage/data:/var/lib/mysql
+#        volumes:
+#            - ./storage/data:/var/lib/mysql
         networks:
             exchange-crypto-network:
                 aliases:

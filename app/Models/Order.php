@@ -25,6 +25,11 @@ class Order extends Model
     const TYPE_BUY = 1;
     const TYPE_SELL = 2;
 
+    const TYPE_LIST = [
+        Order::TYPE_BUY => 'buy',
+        Order::TYPE_SELL => 'sell'
+    ];
+
     /**
      * @return BelongsTo
      */
