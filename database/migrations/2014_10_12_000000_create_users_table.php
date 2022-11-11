@@ -21,12 +21,13 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
-
         });
 
         Schema::create('cryptocurrency', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+//            $table->integer('total');
+//            $table->integer('places');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
         });
@@ -42,9 +43,9 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('user')->onDelete('cascade');
-            $table->float('estimated_balance', 8, 8)->default(0);
-            $table->float('fait_balance', 8, 8)->default(0);
-            $table->float('spot_balance', 8, 8)->default(0);
+            $table->float('estimated_balance', 20, 8)->default(0);
+            $table->float('fait_balance', 20, 8)->default(0);
+            $table->float('spot_balance', 20, 8)->default(0);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
         });
@@ -55,8 +56,8 @@ class CreateUsersTable extends Migration
             $table->integer('cryptocurrency_id')->unsigned();
             $table->foreign('fiat_wallet_id')->references('id')->on('fiat_wallet')->onDelete('cascade');
             $table->foreign('cryptocurrency_id')->references('id')->on('cryptocurrency')->onDelete('cascade');
-            $table->float('total', 8, 8)->default(0);
-            $table->float('available', 8, 8)->default(0);
+            $table->float('total', 20, 8)->default(0);
+            $table->float('available', 20, 8)->default(0);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
         });
@@ -65,7 +66,7 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('user')->onDelete('cascade');
-            $table->float('estimated_balance', 8, 8)->default(0);
+            $table->float('estimated_balance', 20, 8)->default(0);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
         });
@@ -76,8 +77,8 @@ class CreateUsersTable extends Migration
             $table->integer('cryptocurrency_id')->unsigned();
             $table->foreign('funding_wallet_id')->references('id')->on('funding_wallet')->onDelete('cascade');
             $table->foreign('cryptocurrency_id')->references('id')->on('cryptocurrency')->onDelete('cascade');
-            $table->float('total', 8, 8)->default(0);
-            $table->float('available', 8, 8)->default(0);
+            $table->float('total', 20, 8)->default(0);
+            $table->float('available', 20, 8)->default(0);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
         });

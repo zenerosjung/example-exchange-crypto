@@ -25,18 +25,24 @@
                 <tr>
                     <th scope="col">Advertisers</th>
                     <th scope="col">Price</th>
-                    <th scope="col">Limit/Available</th>
+                    <th scope="col">Limit</th>
+                    <th scope="col">Available</th>
                     <th scope="col">Payment</th>
                     <th scope="col">Trade</th>
                 </tr>
             </thead>
             <tbody>
-            @foreach($table_list as $row)
+            @foreach($order_list as $order)
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>{{ $order->user->name }}</td>
+                    <td>{{ number_format($order->price, 2) }}</td>
+                    <td>{{ $order->available }}</td>
+                    <td>{{ number_format($order->limit_min, 2) }} - {{ number_format($order->limit_max, 2) }}</td>
+                    <td>
+                        @foreach($order->orderPayment as $orderPayment)
+
+                        @endforeach
+                    </td>
                     <td><button type="button" class="btn btn-info">{{ ucwords($action) }} {{ $crypto_name }}</button></td>
                 </tr>
             @endforeach
