@@ -25,11 +25,11 @@
                         @csrf
                         <div class="form-group">
                             <label for="inputName">Name *</label>
-                            <input type="text" class="form-control" id="inputName" name="name" required>
+                            <input type="text" class="form-control" id="inputName" name="name" value="{{ old('name') }}" required>
                         </div>
                         <div class="form-group">
                             <label for="inputEmail">Email address *</label>
-                            <input type="email" class="form-control" id="inputEmail" aria-describedby="emailHelp" name="email" required>
+                            <input type="email" class="form-control" id="inputEmail" aria-describedby="emailHelp" name="email" value="{{ old('email') }}" required>
                         </div>
                         <div class="form-group">
                             <label for="inputPassword">Password *</label>

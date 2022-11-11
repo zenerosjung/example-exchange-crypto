@@ -44,8 +44,12 @@
                         @endforeach
                     </td>
                     <td>
-                        <a href="{{ route('order.view', ['id' => $order->id, 'action' => $action])  }}"
-                           class="btn btn-info">{{ ucwords($action) }} {{ $crypto_name }}</a>
+                        @if(!empty($user) && $user->id == $order->user_id)
+                            <a href="#" class="btn btn-danger">Cancel {{ ucwords($action) }}</a>
+                        @else
+                            <a href="@if(empty($user)){{ route('login.view') }}@else{{ route('order.view', ['id' => $order->id, 'action' => $action]) }}@endif"
+                               class="btn btn-info">{{ ucwords($action) }} {{ $crypto_name }}</a>
+                        @endif
                     </td>
                 </tr>
             @endforeach

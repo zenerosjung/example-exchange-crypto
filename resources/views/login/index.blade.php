@@ -25,7 +25,7 @@
                         @csrf
                         <div class="form-group">
                             <label for="inputEmail">Email address</label>
-                            <input type="email" class="form-control" id="inputEmail" name="email" value="john@gmail.com">
+                            <input type="email" class="form-control" id="inputEmail" name="email" value="jame@gmail.com">
                         </div>
                         <div class="form-group">
                             <label for="inputPassword">Password</label>

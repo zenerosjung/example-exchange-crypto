@@ -66,9 +66,11 @@ class CreateOrder extends Migration
 
         Schema::create('transaction', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('user')->onDelete('cascade');
             $table->integer('order_id')->unsigned();
             $table->foreign('order_id')->references('id')->on('order')->onDelete('cascade');
-            $table->integer('payment_type_id')->unsigned();
+            $table->integer('payment_type_id')->unsigned()->nullable(true);
             $table->foreign('payment_type_id')->references('id')->on('payment_type')->onDelete('cascade');
             $table->float('total', 20, 8)->default(0);
             $table->float('receive', 20, 8)->default(0);

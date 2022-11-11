@@ -17,7 +17,7 @@
             </div>
             <div class="row">
                 <div class="col-6">
-                    <p>Price <strong style="color: rgb(3, 166, 109);">{{ number_format($order->price, 2) }} {{ $order->currency->name }}</strong></p>
+                    <p>Price <strong style="color: rgb(3, 166, 109);">{{ number_format($order->price, 2) }} {{ strtoupper($order->currency->name) }}</strong></p>
                 </div>
                 <div class="col-6">
                     <p>Available <strong>{{ $order->available }} {{ strtoupper($order->cryptocurrency->name) }}</strong></p>
@@ -47,11 +47,13 @@
                     <label for="inputTotal">
                         @if($action == 'buy') I want to pay @elseif($action == 'sell') I want to sell @endif
                     </label>
-                    <input type="text" class="form-control" id="inputTotal" name="total">
+                    <input type="text" class="form-control" id="inputTotal" name="total" value="{{ old('total') }}" required
+                           placeholder="@if($action == 'buy') {{ number_format($order->limit_min, 2) }} - {{ number_format($order->limit_max, 2) }} @elseif($action == 'sell') 0.00000000 @endif">
                 </div>
                 <div class="form-group">
                     <label for="inputReceive">I will receive</label>
-                    <input type="text" class="form-control" id="inputReceive" name="receive">
+                    <input type="text" class="form-control" id="inputReceive" name="receive" value="{{ old('receive') }}" required
+                           placeholder="@if($action == 'buy') 0.00000000 @elseif($action == 'sell') {{ number_format($order->limit_min, 2) }} - {{ number_format($order->limit_max, 2) }} @endif">
                 </div>
                 @if($action == 'sell')
                 <div class="form-group">
@@ -70,4 +72,14 @@
         </div>
     </div>
 </div>
+
+@if(isset($errors) && $errors->any())
+    @foreach ($errors->all() as $error)
+        <?php alert()->error($error); ?>
+    @endforeach
+@endif
+
+@section('js')
+
+@stop
 @include('footer')

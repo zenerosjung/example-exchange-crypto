@@ -87,6 +87,14 @@ class User extends Authenticatable
     }
 
     /**
+     * @return HasMany
+     */
+    public function transaction(): HasMany
+    {
+        return $this->hasMany(Transaction::class);
+    }
+
+    /**
      * @param int $crypto_id
      * @return mixed|null
      */
